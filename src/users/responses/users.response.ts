@@ -3,3 +3,9 @@ export class UserResponse {
   username?: string;
   email?: string;
 }
+
+export interface UserApiResponse {
+  success: boolean;
+  data: UserResponse | UserResponse[];
+  message?: string;
+}
