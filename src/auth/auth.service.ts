@@ -53,6 +53,7 @@ export class AuthService {
       id: user.id.toString(),
       username: user.username,
       email: user.email,
+      role: user.role,
     };
 
     const generatedToken = CommonUtils.generateJwtToken(jwtData);
