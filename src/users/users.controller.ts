@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { createUserDto, updateUserDto } from './dtos/users.dto';
@@ -14,6 +15,7 @@ import { UserApiResponse } from './responses/users.response';
 import { JwtAuthGuard } from '../commons/guards/jwtAuth.guard';
 import { RolesGuard } from '../commons/guards/roles.guard';
 import { Roles } from '../commons/decorators/roles.decorator';
+import { PaginationDto } from '../commons/dtos/paginations.dto';
 
 @Controller('users')
 export class UsersController {
@@ -29,8 +31,10 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @Roles('ADMIN')
   @Get()
-  async getAllUsers(): Promise<UserApiResponse> {
-    const data = await this.usersService.getAllUsers();
+  async getAllUsers(
+    @Query() paginationdto: PaginationDto,
+  ): Promise<UserApiResponse> {
+    const data = await this.usersService.getAllUsers(paginationdto);
     return { success: true, data };
   }
 

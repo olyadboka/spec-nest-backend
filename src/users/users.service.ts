@@ -6,6 +6,8 @@ import {
 import { createUserDto, updateUserDto } from './dtos/users.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import bcrypt from 'bcrypt';
+import { PaginationDto } from '../commons/dtos/paginations.dto';
+import { DEFAULT_PAGINATION_LIMMIT } from '../commons/constants/constants';
 
 const userSelect = { id: true, username: true, email: true };
 
@@ -34,9 +36,11 @@ export class UsersService {
     return user;
   }
 
-  async getAllUsers() {
+  async getAllUsers(paginationdto: PaginationDto) {
     return this.prisma.user.findMany({
       select: userSelect,
+      skip: paginationdto.skip,
+      take: paginationdto.limmit ?? DEFAULT_PAGINATION_LIMMIT,
     });
   }
 
